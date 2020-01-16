@@ -1,5 +1,7 @@
 # Google ReCaptcha Extension for AspNetCore
 
+![Nuget](https://img.shields.io/nuget/dt/Ecozum.GoogleReCaptcha)
+
 `Startup.cs`
 
 ```csharp
