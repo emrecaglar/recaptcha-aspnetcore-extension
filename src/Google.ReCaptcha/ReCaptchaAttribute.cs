@@ -24,6 +24,8 @@ namespace Google.ReCaptcha
             if (encodedResponse == null)
             {
                 context.Result = new StatusCodeResult(StatusCodes.Status400BadRequest);
+
+		return;
             }
 
             await ValidateCaptcha(context, encodedResponse);
