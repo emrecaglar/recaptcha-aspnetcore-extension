@@ -27,10 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\..\..\..\..\vs-online\recaptcha-aspnetcore-extension\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
     <None Include="..\..\recaptcha-icon.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>

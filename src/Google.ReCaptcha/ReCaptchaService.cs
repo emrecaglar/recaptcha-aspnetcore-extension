@@ -12,6 +12,8 @@ namespace Google.ReCaptcha
         Task<ValidatationResponse> ValidateAsync(string captcha);
 
         Task<ValidatationResponse> ValidateAndThrowAsync(string captcha);
+
+        CaptchaAttributeDefaults GetDefaults();
     }
 
     internal class ReCaptchaService : IReCaptchaService
@@ -57,6 +59,12 @@ namespace Google.ReCaptcha
             }
 
             return response;
+        }
+
+
+        public CaptchaAttributeDefaults GetDefaults()
+        {
+            return _options.Defaults ?? new CaptchaAttributeDefaults();
         }
     }
 }

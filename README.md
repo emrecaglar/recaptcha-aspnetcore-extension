@@ -9,8 +9,11 @@ public void ConfigureServices(IServiceCollection services)
 {
     services.AddReCaptcha(opt =>
     {
-        opt.Endpoint = "https://www.google.com/recaptcha/api/siteverify";
+        //opt.Endpoint = "https://www.google.com/recaptcha/api/siteverify"; -> Obsolote
         opt.Secret = "your_secret";
+
+        opt.Defaults.Input = InputType.Body;
+        opt.Defaults.InputName = "g-captcha-response";
     });
 }
 ```
@@ -31,7 +34,7 @@ public void ConfigureServices(IServiceCollection services)
 
 ```json
 "ReCaptcha":{
-    "Endpoint":"https://www.google.com/recaptcha/api/siteverify",
+    //"Endpoint":"https://www.google.com/recaptcha/api/siteverify", -> Obsolote
     "Secret":"your_secret"
 }
 ```

@@ -16,7 +16,6 @@ namespace Microsoft.Extensions.DependencyInjection
 
                 AddReCaptcha(services, options => 
                 {
-                    options.Endpoint = configuration["ReCaptcha:Endpoint"];
                     options.Secret = configuration["ReCaptcha:Secret"];
                 });
             }
@@ -39,7 +38,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 {
                     var recaptchaOptions = (ReCaptchaOptions)scope.ServiceProvider.GetService(typeof(ReCaptchaOptions));
 
-                    client.BaseAddress = new Uri(recaptchaOptions.Endpoint);
+                    client.BaseAddress = new Uri("https://www.google.com/recaptcha/api/siteverify");
                 }
             });
 
