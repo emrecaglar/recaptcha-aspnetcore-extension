@@ -55,7 +55,7 @@ namespace Google.ReCaptcha
 
             if (!response.Success)
             {
-                throw new Exception(string.Join("-", response.ErrorCodes));
+                throw new ReCaptchaException("InvalidCaptcha", string.Join("-", response.ErrorCodes));
             }
 
             return response;
