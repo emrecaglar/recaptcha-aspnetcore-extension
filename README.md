@@ -94,7 +94,6 @@ public void ConfigureServices(IServiceCollection services)
 {
     services.AddReCaptcha();
 
-    GoogleReCaptcha.TestMode = true;
     GoogleReCaptcha.ResponseCodeForTest = "abc123";
 }
 ```
