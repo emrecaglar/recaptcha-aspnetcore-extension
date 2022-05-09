@@ -1,6 +1,6 @@
 # Google ReCaptcha Extension for AspNetCore Web API
 
-![Nuget](https://img.shields.io/nuget/dt/Ecozum.GoogleReCaptcha)
+![Nuget](https://img.shields.io/nuget/dt/AspNetCore.WebApi.GoogleReCaptcha)
 
 `Startup.cs`
 

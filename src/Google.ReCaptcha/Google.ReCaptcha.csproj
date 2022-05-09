@@ -5,7 +5,7 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>Emre Çağlar</Authors>
 		<Product>Google ReCaptcha AspNetCore Extension</Product>
-		<Version>0.3.6</Version>
+		<Version>0.3.7</Version>
 		<Copyright>Emre Çağlar</Copyright>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<PackageProjectUrl>https://github.com/emrecaglar/recaptcha-aspnetcore-extension</PackageProjectUrl>
@@ -14,8 +14,9 @@
 		<RepositoryUrl>https://github.com/emrecaglar/recaptcha-aspnetcore-extension</RepositoryUrl>
 		<PackageTags>google recaptcha captcha</PackageTags>
 		<PackageId>AspNetCore.WebApi.GoogleReCaptcha</PackageId>
-		<Description>this package, use for only "Web API" captcha validation use</Description>
+		<Description></Description>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<Description>This package, use for only "Web API" captcha validation use</Description>
 	</PropertyGroup>
 
 	<ItemGroup>
