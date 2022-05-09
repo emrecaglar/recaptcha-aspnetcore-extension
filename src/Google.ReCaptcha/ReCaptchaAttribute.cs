@@ -2,12 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Primitives;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Google.ReCaptcha
@@ -113,7 +111,10 @@ namespace Google.ReCaptcha
 
                         string json = await streamReader.ReadToEndAsync();
 
-                        var obj = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
+                        context.HttpContext.Request.Body.Seek(0, SeekOrigin.Begin);
+
+#if NETCOREAPP2_1
+var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
 
                         var key = obj.Keys.FirstOrDefault(x => x.Equals(InputName, StringComparison.OrdinalIgnoreCase));
 
@@ -123,6 +124,13 @@ namespace Google.ReCaptcha
                         }
 
                         return $"{obj[key]}";
+#elif NETCOREAPP3_1_OR_GREATER
+                        var doc = System.Text.Json.JsonDocument.Parse(json);
+
+                        string encodedResponseCode = doc.RootElement.GetProperty(InputName).GetString();
+
+                        return encodedResponseCode;
+#endif
                     }
                     catch
                     {

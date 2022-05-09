@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
@@ -30,6 +29,19 @@ namespace Google.ReCaptcha
 
         public async Task<ValidatationResponse> ValidateAsync(string captcha)
         {
+            if (GoogleReCaptcha.ResponseCodeForTest != null)
+            {
+                return new ValidatationResponse
+                {
+                    ChallengeTs = DateTime.Now,
+                    ErrorCodes = captcha == GoogleReCaptcha.ResponseCodeForTest
+                                    ? new List<string>()
+                                    : new List<string> { "invalid response code" },
+                    Hostname = "",
+                    Success = captcha == GoogleReCaptcha.ResponseCodeForTest
+                };
+            }
+
             using (var http = _httpClientFactory.CreateClient(GoogleHttpClientName.Name))
             {
                 var httpResponse = await http.GetAsync($"?secret={_options.Secret}&response={captcha}");
@@ -45,7 +57,11 @@ namespace Google.ReCaptcha
 
                 var content = await httpResponse.Content.ReadAsStringAsync();
 
-                return JsonConvert.DeserializeObject<ValidatationResponse>(content);
+#if NETCOREAPP2_1
+                return Newtonsoft.Json.JsonConvert.DeserializeObject<ValidatationResponse>(content);
+#elif NETCOREAPP3_1_OR_GREATER
+                return System.Text.Json.JsonSerializer.Deserialize<ValidatationResponse>(content);
+#endif
             }
         }
 

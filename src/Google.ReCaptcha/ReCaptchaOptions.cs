@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Google.ReCaptcha
+﻿namespace Google.ReCaptcha
 {
     public class ReCaptchaOptions
     {
@@ -12,9 +8,6 @@ namespace Google.ReCaptcha
         }
 
         public string Secret { get; set; }
-
-        [Obsolete("Fixed url is now used")]
-        public string Endpoint { get; set; }
 
         public CaptchaAttributeDefaults Defaults { get; set; }
     }
