@@ -1,9 +1,7 @@
 # Google ReCaptcha Extension for AspNetCore Web API
 
 ![Nuget](https://img.shields.io/nuget/dt/AspNetCore.WebApi.GoogleReCaptcha)
-
 ![License](https://img.shields.io/github/license/emrecaglar/recaptcha-aspnetcore-extension)
-
 ![Version](https://img.shields.io/nuget/v/AspNetCore.WebApi.GoogleReCaptcha)
 
 `Startup.cs`
