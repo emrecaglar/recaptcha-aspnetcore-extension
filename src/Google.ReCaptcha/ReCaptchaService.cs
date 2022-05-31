@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
@@ -20,17 +21,25 @@ namespace Google.ReCaptcha
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ReCaptchaOptions _options;
 
-        public ReCaptchaService(IHttpClientFactory httpClientFactory, ReCaptchaOptions options)
+        private ILogger Logger { get; set; }
+
+        public ReCaptchaService(IHttpClientFactory httpClientFactory, ReCaptchaOptions options, ILoggerFactory loggerFactory)
         {
             _httpClientFactory = httpClientFactory;
             _options = options;
+
+            Logger = loggerFactory?.CreateLogger(this.GetType());
         }
 
 
         public async Task<ValidatationResponse> ValidateAsync(string captcha)
         {
+            Logger?.LogDebug("ValidateAsync...");
+
             if (GoogleReCaptcha.ResponseCodeForTest != null)
             {
+                Logger?.LogWarning("Validate captcha for debugging. captcha code: {@code}", GoogleReCaptcha.ResponseCodeForTest);
+
                 return new ValidatationResponse
                 {
                     ChallengeTs = DateTime.Now,
@@ -44,7 +53,11 @@ namespace Google.ReCaptcha
 
             using (var http = _httpClientFactory.CreateClient(GoogleHttpClientName.Name))
             {
+                Logger?.LogDebug("Validating captcha via google... captcha code: {@code}", captcha);
+
                 var httpResponse = await http.GetAsync($"?secret={_options.Secret}&response={captcha}");
+
+                Logger?.LogDebug("captcha validation response status code: {@statusCode}", httpResponse.StatusCode);
 
                 if (!httpResponse.IsSuccessStatusCode)
                 {
@@ -56,6 +69,8 @@ namespace Google.ReCaptcha
                 }
 
                 var content = await httpResponse.Content.ReadAsStringAsync();
+
+                Logger?.LogDebug("captcha validation response content {@content}", content);
 
 #if NETCOREAPP2_1
                 return Newtonsoft.Json.JsonConvert.DeserializeObject<ValidatationResponse>(content);
@@ -71,6 +86,8 @@ namespace Google.ReCaptcha
 
             if (!response.Success)
             {
+                Logger?.LogWarning("invalid captcha. throwing recaptcha exception.");
+
                 throw new ReCaptchaException("InvalidCaptcha", string.Join("-", response.ErrorCodes));
             }
 
